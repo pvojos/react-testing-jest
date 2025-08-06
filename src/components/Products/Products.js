@@ -1,16 +1,15 @@
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart } from "../../actions";
 import { CategoryTitle, MainContainer, ProductsContainer } from "./productsStyles";
 import ProductCard from "./ProductCard";
+import { handleAddToCart } from "./functions/productsFunctions";
 
 const Products = ({isCartOpen}) => {
 
     const dispatch = useDispatch()
     const productsList = useSelector(state => state.products.productsList)
 
-    const handleAddToCart = (id) => {
-        const productToAdd = productsList.filter(product => product.id === id)[0]
-        dispatch(addToCart(productToAdd))
+    const handleClickAddToCart = (id) => {
+        handleAddToCart(id, productsList, dispatch)
     }
 
     return (
@@ -25,7 +24,7 @@ const Products = ({isCartOpen}) => {
                         image={product.image}
                         name={product.name}
                         price={product.price}
-                        handleAddToCart={handleAddToCart}
+                        handleClickAddToCart={handleClickAddToCart}
                     />
                 ))}
             </ProductsContainer>

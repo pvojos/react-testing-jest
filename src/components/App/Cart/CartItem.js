@@ -2,7 +2,7 @@ import { CartItemBottomInfo, CartItemCard, CartItemDeleteIcon, CartItemImage, Ca
 import trashcanIcon from "../../../assets/trashcan-icon.svg"
 import { formatNumber } from "../../../helpers/numberFormatHelper";
 
-const CartItem = ({id, image, name, quantity, price, stock, handleRemoveItem, handleIncreaseQuantity, handleDecreaseQuantity}) => {
+const CartItem = ({id, image, name, quantity, price, stock, handleClickOnRemoveItem, handleClickIncreaseQuantity, handleClickDecreaseQuantity}) => {
     
     return (
         <CartItemCard>
@@ -13,15 +13,15 @@ const CartItem = ({id, image, name, quantity, price, stock, handleRemoveItem, ha
                     <CartItemName>{name}</CartItemName>
 
                     <CartItemQuantityControl>
-                        <QuantityControlButton 
-                            onClick={() => handleDecreaseQuantity(id)}
+                        <QuantityControlButton
+                            onClick={() => handleClickDecreaseQuantity(id)}
                             disabled={quantity === 1}
                         >
                             -
                         </QuantityControlButton>
                         <QuantityText>{quantity}</QuantityText>
                         <QuantityControlButton 
-                            onClick={() => handleIncreaseQuantity(id)}
+                            onClick={() => handleClickIncreaseQuantity(id)}
                             disabled={quantity === stock}
                         >
                             +
@@ -31,7 +31,7 @@ const CartItem = ({id, image, name, quantity, price, stock, handleRemoveItem, ha
 
                 <CartItemBottomInfo>
                     <CartItemPrice>MXN {formatNumber(price)}</CartItemPrice>
-                    <CartItemDeleteIcon onClick={() => handleRemoveItem(id)}>
+                    <CartItemDeleteIcon onClick={() => handleClickOnRemoveItem(id)}>
                         <img src={trashcanIcon} alt="Icono de bote de basura" />
                     </CartItemDeleteIcon>
                 </CartItemBottomInfo>

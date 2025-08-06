@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { HeaderCartIcon, CartContainer, HeaderContainer, HeaderLogo, NotificationBubble } from "./headerStyles";
 import logo from "../../assets/logo.svg"
 import cartIcon from "../../assets/cart-icon.svg"
+import { calculateCartItems } from "./functions/headerFunctions";
 
 const Header = ({setIsCartOpen}) => {
 
@@ -10,7 +11,7 @@ const Header = ({setIsCartOpen}) => {
     const [cartLength, setCartLength] = useState(0)
     
     useEffect(() => {
-        const cartItems = cart.reduce((total, item) => total + item.quantity ,0)
+        const cartItems = calculateCartItems(cart)
         setCartLength(cartItems)
     }, [cart])
 

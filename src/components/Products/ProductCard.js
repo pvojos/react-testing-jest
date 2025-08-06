@@ -1,7 +1,7 @@
 import { formatNumber } from "../../helpers/numberFormatHelper";
 import { ProductCardContainer, ProductImage, ProductContent, ProductInfoContainer, ProductName, ProductPrice, AddToCartButton } from "./productsStyles";
 
-const ProductCard = ({id, image, name, price, handleAddToCart}) => {
+const ProductCard = ({id, image, name, price, handleClickAddToCart}) => {
     return (
         <ProductCardContainer>
             <ProductImage src={image} alt={name} />
@@ -13,7 +13,7 @@ const ProductCard = ({id, image, name, price, handleAddToCart}) => {
                 </ProductInfoContainer>
 
                 <AddToCartButton
-                    onClick={() => handleAddToCart(id)}
+                    onClick={() => handleClickAddToCart(id)}
                 >
                     Agregar al carrito
                 </AddToCartButton>
