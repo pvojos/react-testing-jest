@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { CartBackground, CartContent, CartFooter, CartHeader, CartModal, CartTitle, CloseCartButton, DeleteAllButton, EmptyCartText, TotalContainer, TotalQuantity, TotalText } from "./cartStyles";
 import CartItem from "./CartItem";
 import { formatNumber } from "../../../helpers/numberFormatHelper";
-import { decreaseQuantity, deleteAll, increaseQuantity, removeFromCart } from "../../../actions";
+import { calculateTotal, handleDecreaseQuantity, handleDeleteAll, handleIncreaseQuantity, handleRemoveItem } from "./functions/cartFunctions";
 
 const Cart = ({isCartOpen, setIsCartOpen}) => {
 
@@ -12,20 +12,24 @@ const Cart = ({isCartOpen, setIsCartOpen}) => {
     const [cartTotal, setCartTotal] = useState(0)
     
     useEffect(() => {
-        const total = cart.reduce((total, item) => total + (item.price * item.quantity),0)
+        const total = calculateTotal(cart);
         setCartTotal(total)
     }, [cart])
 
-    const handleRemoveItem = (id) => {
-        dispatch(removeFromCart(id))
+    const handleClickOnRemoveItem = (id) => {
+        handleRemoveItem(dispatch, id)
     }
 
-    const handleIncreaseQuantity = (id) => {
-        dispatch(increaseQuantity(id))
+    const handleClickIncreaseQuantity = (id) => {
+        handleIncreaseQuantity(dispatch, id)
     }
 
-    const handleDecreaseQuantity = (id) => {
-        dispatch(decreaseQuantity(id))
+    const handleClickDecreaseQuantity = (id) => {
+        handleDecreaseQuantity(dispatch, id)
+    }
+
+    const handleClickDeleteAll = () => {
+        handleDeleteAll(dispatch)
     }
 
     return (
@@ -53,9 +57,9 @@ const Cart = ({isCartOpen, setIsCartOpen}) => {
                                     quantity={item.quantity}
                                     price={item.price}
                                     stock={item.stock}
-                                    handleRemoveItem={handleRemoveItem}
-                                    handleIncreaseQuantity={handleIncreaseQuantity}
-                                    handleDecreaseQuantity={handleDecreaseQuantity}
+                                    handleClickOnRemoveItem={handleClickOnRemoveItem}
+                                    handleClickIncreaseQuantity={handleClickIncreaseQuantity}
+                                    handleClickDecreaseQuantity={handleClickDecreaseQuantity}
                                 />
                             ))}
                         </CartContent>
@@ -67,7 +71,7 @@ const Cart = ({isCartOpen, setIsCartOpen}) => {
                             </TotalContainer>
 
                             <DeleteAllButton
-                                onClick={() => dispatch(deleteAll())}
+                                onClick={() => handleClickDeleteAll()}
                             >
                                 Eliminar todo
                             </DeleteAllButton>

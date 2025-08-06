@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import { getProducts } from "./functions/getProducts";
 
 const useAxios = (endpoint) => {
     const [products, setProducts] = useState([])
@@ -7,24 +7,22 @@ const useAxios = (endpoint) => {
     const [error, setError] = useState(null)
     
     useEffect(() => {
-        const getProducts = async () => {
+        const getProductsList = async () => {
             try {
                 setLoading(true)
                 setError(null)
 
-                const response = await axios.get(endpoint)
-                const data = response.data
-
+                const data = await getProducts(endpoint)
                 setProducts(data)
-            } catch (error) {
-                console.error("Error fetching products: ", error)
-                setError(error)
+            } catch (err) {
+                console.error("Error fetching products: ", err)
+                setError(err)
             } finally {
                 setLoading(false)
             }
         }
 
-        getProducts()
+        getProductsList()
     }, [endpoint])
 
     return {

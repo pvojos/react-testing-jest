@@ -36,7 +36,7 @@ const App = () => {
 
   useEffect(() => {
     dispatch(getProductsList(products))
-  }, [products])
+  }, [products, dispatch])
 
   return (
     <AppContainer>
